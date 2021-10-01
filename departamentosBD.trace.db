@@ -1,0 +1,25 @@
+2021-10-01 09:46:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DEPARTAMENTO" no encontrada
+Table "DEPARTAMENTO" not found; SQL statement:
+SELECT* 
+FROM departamento [42102-200]
+2021-10-01 09:46:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DEPARTAMENTO" no encontrada
+Table "DEPARTAMENTO" not found; SQL statement:
+SELECT* 
+FROM departamento [42102-200]
+2021-10-01 09:46:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DEPARTAMENTO" no encontrada
+Table "DEPARTAMENTO" not found; SQL statement:
+SELECT* 
+FROM departamento [42102-200]
+2021-10-01 09:49:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DEPARTAMENTO" no encontrada
+Table "DEPARTAMENTO" not found; SQL statement:
+SELECT*
+FROM departamento [42102-200]
+2021-10-01 09:49:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DEPARTAMENTO" no encontrada
+Table "DEPARTAMENTO" not found; SQL statement:
+SELECT*
+FROM departamento [42102-200]

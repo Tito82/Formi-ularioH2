@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane vgap ="10" hgap="10" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tito.dida.jdbc.ControladorFormularioDepartamento">
+    
+    <padding>
+        <Insets top ="10" right="10" bottom="10" left="10"/>
+    </padding>    
+    
+    <Text text="Departamento" style="-fx-font-weight:bold;" 
+          GridPane.rowIndex="0"
+          GridPane.columnIndex="0"
+          GridPane.columnSpan="2"
+          
+    >
+    </Text>
+    <Label text="Nombre" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="nombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Label text="Descripcion" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextArea fx:id="descripcion" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Button GridPane.rowIndex="3" GridPane.columnIndex="1" text ="Guardar" onAction="#guardar"/>
+    
+</GridPane>
