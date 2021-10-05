@@ -1,20 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.tito.dida.jdbc;
 
+package com.tito.dida.jdbc;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -28,6 +27,9 @@ public class ControladorFormularioDepartamento implements Initializable {
     
     @FXML
     TextArea descripcion;
+    
+    @FXML
+    TableView<Departamento>tablaDepartamentos;
    
 
     public void guardar(){
@@ -46,15 +48,15 @@ public class ControladorFormularioDepartamento implements Initializable {
         }catch(Exception e){
                 e.printStackTrace();
         }
+        
+        cargarDepartamentosDeLaBase();
     
         nombre.clear();
         descripcion.clear();
        
     }
 
-    /**
-     * Initializes the controller class.
-     */
+  
     @Override
     public void initialize(URL location, ResourceBundle resources) {
       try(Connection conexionDataBase = DriverManager.getConnection("jdbc:h2:./departamentosDB","root","")){
@@ -67,6 +69,25 @@ public class ControladorFormularioDepartamento implements Initializable {
       }catch (Exception e){
           e.printStackTrace();
       }
+      cargarDepartamentosDeLaBase();
     }    
-    
+
+    private void cargarDepartamentosDeLaBase() {
+    try(Connection conexionDataBase = DriverManager.getConnection("jdbc:h2:./departamentosDB","root","")){
+        Statement statement = conexionDataBase.createStatement();
+        String sql = "SELECT * FROM departamento";
+        ResultSet resultSet = statement.executeQuery(sql);
+        ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
+        while(resultSet.next()){
+            Departamento departamento=new Departamento();
+            departamento.setDescripcion(resultSet.getString("descripcion"));
+            departamento.setNombre(resultSet.getString("nombre"));
+            departamento.setId(resultSet.getInt("id"));
+            departamentos.add(departamento);
+        }
+        tablaDepartamentos.setItems(departamentos);
+         }catch (Exception e){
+             e.printStackTrace();
+        }
+    }
 }
