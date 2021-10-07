@@ -16,12 +16,42 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" spacing ="20" fx:controller="com.tito.dida.jdbc.ControladorFormularioDepartamento">
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing ="20" fx:controller="com.tito.dida.jdbc.ControladorFormularioDepartamento">
     <padding>
         <Insets top ="10" right="10" bottom="10" left="10"/>
     </padding>  
     
+ <ToolBar HBox.hgrow="ALWAYS">
+    <Button onAction="#guardar">
+     <graphic>
+         <ImageView>
+             <Image url="@../../../../iconos/guardar.png">
+             </Image>
+         </ImageView>
+     </graphic>
+    </Button> 
+    <Button onAction="#editar">
+     <graphic>
+         <ImageView>
+             <Image url="@../../../../iconos/editar.png">
+             </Image>
+         </ImageView>
+     </graphic>
+    </Button> 
+    <Button onAction="#eliminar">
+     <graphic>
+         <ImageView>
+             <Image url="@../../../../iconos/eliminar.png">
+             </Image>
+         </ImageView>
+     </graphic>
+    </Button> 
+</ToolBar>
+
 <GridPane hgap="10" vgap="10">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
@@ -43,6 +73,7 @@
     <Button GridPane.rowIndex="3" GridPane.columnIndex="1" text ="Guardar" onAction="#guardar"/>
     
 </GridPane>
+
     <StackPane HBox.hgrow="ALWAYS">
      <TableView  fx:id="tablaDepartamentos">
          <columns>

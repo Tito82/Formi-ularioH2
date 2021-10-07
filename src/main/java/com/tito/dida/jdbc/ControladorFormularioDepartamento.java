@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 /**
@@ -30,30 +30,48 @@ public class ControladorFormularioDepartamento implements Initializable {
     
     @FXML
     TableView<Departamento>tablaDepartamentos;
+    
+    int idDepartamentoSeleccionado = 0;
+    
+    public void editar(){
+        Departamento departamento = tablaDepartamentos.getSelectionModel().getSelectedItem();
+        nombre.setText(departamento.getNombre());
+        descripcion.setText(departamento.getDescripcion());
+        idDepartamentoSeleccionado = departamento.getId();
+    }
    
 
     public void guardar(){
         
         try(Connection conexionDataBase = DriverManager.getConnection("jdbc:h2:./departamentosDB","root","")){
         Statement statement = conexionDataBase.createStatement();
-        String sql = "INSERT INTO departamento(nombre ,descripcion)VALUES('"+nombre.getText()+"','"+ descripcion.getText()+"')";
+        String sql= null;
+        if(idDepartamentoSeleccionado ==0){
+            sql = "INSERT INTO departamento(nombre ,descripcion)VALUES('"+nombre.getText()+"','"+ descripcion.getText()+"')";
+        }else{
+            sql = "UPDATE departamento set nombre='"+ nombre.getText()+ "',descripcion='" + descripcion.getText() + "'WHERE id=" +idDepartamentoSeleccionado;
+            idDepartamentoSeleccionado = 0;
+        }
         statement.executeUpdate(sql);
-        System.out.println("informacion guardada en la base de datos H2");
-        
-        sql = "SELECT COUNT(*) AS cantidad FROM departamento";
-        ResultSet resultadoConsulta = statement.executeQuery(sql);
-        if(resultadoConsulta.next()){
-            System.out.println("Departamentos guardados: "+ resultadoConsulta.getInt("cantidad"));
-        }
         }catch(Exception e){
-                e.printStackTrace();
+            e.printStackTrace();
         }
-        
         cargarDepartamentosDeLaBase();
-    
         nombre.clear();
         descripcion.clear();
-       
+    }
+    
+    public void eliminar(){
+        Departamento departamento = tablaDepartamentos.getSelectionModel().getSelectedItem();
+        try (Connection conexionDataBase = DriverManager.getConnection("jdbc:h2:./departamentosDB","root","")){
+        Statement statement = conexionDataBase.createStatement();
+        String sql = "DELETE FROM departamento WHERE id = " + departamento.getId();
+        statement.executeUpdate(sql);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        cargarDepartamentosDeLaBase();
+        
     }
 
   
@@ -70,6 +88,7 @@ public class ControladorFormularioDepartamento implements Initializable {
           e.printStackTrace();
       }
       cargarDepartamentosDeLaBase();
+      configurarTamanhoColumnas();
     }    
 
     private void cargarDepartamentosDeLaBase() {
@@ -79,7 +98,7 @@ public class ControladorFormularioDepartamento implements Initializable {
         ResultSet resultSet = statement.executeQuery(sql);
         ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
         while(resultSet.next()){
-            Departamento departamento=new Departamento();
+            Departamento departamento = new Departamento();
             departamento.setDescripcion(resultSet.getString("descripcion"));
             departamento.setNombre(resultSet.getString("nombre"));
             departamento.setId(resultSet.getInt("id"));
@@ -90,4 +109,13 @@ public class ControladorFormularioDepartamento implements Initializable {
              e.printStackTrace();
         }
     }
+    
+    private void configurarTamanhoColumnas(){
+        tablaDepartamentos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ObservableList<TableColumn<Departamento,?>> columnas = tablaDepartamentos.getColumns();
+        columnas.get(0).setMaxWidth(1f*Integer.MAX_VALUE*15);
+        columnas.get(1).setMaxWidth(1f*Integer.MAX_VALUE*25);
+        columnas.get(2).setMaxWidth(1f*Integer.MAX_VALUE*60);
+    }
+    
 }

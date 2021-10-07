@@ -20,7 +20,8 @@ public class Formulario extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent contenedor = new FXMLLoader().load(getClass().getResource("FormularioDepartamento.fxml"));
-        Scene escena = new Scene (contenedor,700,400);
+        Scene escena = new Scene (contenedor,500,700);
+        escena.getStylesheets().addAll(getClass().getResource("estilos.css").toExternalForm());
         primaryStage.setScene(escena);
         primaryStage.show();
     }
